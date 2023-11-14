@@ -6,4 +6,5 @@ for pushing materials from ur local computer to git repo :
 done
 tip:
 git config --global credential.helper cache 
+git config --global credential.helper store // permanently store 
 above command will cause ur local computer to remember credentials for push request, so u dont need to enter it everytime.
