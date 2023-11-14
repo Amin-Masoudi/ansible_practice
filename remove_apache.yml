@@ -1,0 +1,16 @@
+
+- hosts: all
+  become: true
+  tasks:
+
+  - name: remove proxy support for apache
+    apk:
+      name: apache2-proxy
+      state: absent
+
+
+
+  - name: remove apache package
+    apk:
+      name: apache2
+      state: absent

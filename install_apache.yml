@@ -1,0 +1,17 @@
+
+- hosts: all
+  become: true
+  tasks:
+  - name: updating repo index
+    apk:
+      update_cache: yes
+
+  - name: install apache package
+    apk:
+      name: apache2
+      state: latest
+
+  - name: install php support for apache
+    apk:
+      name: apache2-proxy
+      state: latest
