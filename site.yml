@@ -1,0 +1,39 @@
+
+- hosts: all
+  become: true
+  pre_tasks:
+
+  - name: install updates
+    tags: always
+    apk:
+     update_cache: true
+     upgrade: true
+    when: ansible_distribution == "CentOS"
+
+- hosts: web_servers
+  become: true
+  tasks:
+
+  - name: install apache package
+    tags: apache2
+    apk:
+      name:
+        - apache2
+        - apache2-proxy
+      state: latest
+
+  - name: Make "apache2" start on boot and start now, if not started.
+    ansible.builtin.service:
+      name: apache2
+      pattern: /usr/sbin/httpd
+      enabled: true
+      state: started
+
+  - name: copy html file to nodes
+    tags: httpd, index
+    copy:
+      src: default_site.html
+      dest: /var/www/localhost/htdocs/index.html
+      owner: root
+      group: root
+      mode: 0644
